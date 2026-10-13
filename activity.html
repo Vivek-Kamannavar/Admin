@@ -8,6 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <!-- Firebase Realtime Cloud Synchronization SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
     <style>
         :root {
             --tile-size: 55px;
@@ -663,6 +666,27 @@ int main() {
 </div>
 
 <script>
+    // Firebase Realtime Database Configuration for multi-device cross-network live sync
+    const firebaseConfig = {
+        apiKey: "AIzaSyDayI8xRvcribG0EUiBWnr2tLSlVTPGXZo",
+        authDomain: "admin-ebe4c.firebaseapp.com",
+        databaseURL: "https://admin-ebe4c-default-rtdb.firebaseio.com",
+        projectId: "admin-ebe4c",
+        storageBucket: "admin-ebe4c.firebasestorage.app",
+        messagingSenderId: "272029700916",
+        appId: "1:272029700916:web:011553f1310e38a7698b61"
+    };
+
+    if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    const db = (typeof firebase !== 'undefined' && firebase.database) ? firebase.database() : null;
+
+    function getParticipantKey(reg) {
+        if (!reg) return 'p_' + Date.now();
+        return encodeURIComponent(reg.trim()).replace(/[.#$\[\]\/]/g, '_');
+    }
+
     let participant = { name: '', reg: '', startTime: 0, timeSpent: 0 };
     let answers = { 
         m1: '', m2: '', m3: '', m4: '', m5: '', 
@@ -674,7 +698,7 @@ int main() {
     let timerInterval = null;
     let isSubmitted = false; // Permanent lock post-submission
 
-    // Cross-tab and live sync broadcast channel
+    // Cross-tab and live sync broadcast channel (same-device fallback)
     const syncChannel = ('BroadcastChannel' in window) ? new BroadcastChannel('cs_quest_sync') : null;
     function notifyAdmin(action, payload) {
         if(syncChannel) {
@@ -728,6 +752,22 @@ int main() {
             liveList.push({ name, reg, status: 'Active', violations: 0, score: 0, timeTaken: '00:00' });
         }
         localStorage.setItem('cs_live_participants', JSON.stringify(liveList));
+
+        // Multi-device Cloud Sync to Firebase Realtime Database
+        if(db) {
+            const key = getParticipantKey(reg);
+            db.ref('participants/' + key).set({
+                name: name,
+                reg: reg,
+                status: 'Active',
+                violations: 0,
+                score: 0,
+                timeTaken: '00:00',
+                startTime: Date.now(),
+                updatedAt: Date.now()
+            }).catch(e => console.warn('Cloud sync error:', e));
+        }
+
         notifyAdmin('participant_registered', { name, reg });
 
         startTimer();
@@ -744,6 +784,17 @@ int main() {
             let s = timeLeft % 60;
             document.getElementById('timer').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
             participant.timeSpent = (30 * 60) - timeLeft;
+
+            // Heartbeat update time every 15 seconds to cloud
+            if(participant.timeSpent % 15 === 0 && db && participant.reg) {
+                const key = getParticipantKey(participant.reg);
+                const timeTakenStr = `${Math.floor(participant.timeSpent / 60)}m ${participant.timeSpent % 60}s`;
+                db.ref('participants/' + key).update({
+                    timeTaken: timeTakenStr,
+                    updatedAt: Date.now()
+                }).catch(() => {});
+            }
+
             if(timeLeft <= 0) {
                 clearInterval(timerInterval);
                 submitActivity();
@@ -778,6 +829,16 @@ int main() {
             p.status = 'Disqualified';
             localStorage.setItem('cs_live_participants', JSON.stringify(liveList));
         }
+
+        // Multi-device Cloud Sync: update disqualification status in Firebase
+        if(db && participant.reg) {
+            const key = getParticipantKey(participant.reg);
+            db.ref('participants/' + key).update({
+                status: 'Disqualified',
+                updatedAt: Date.now()
+            }).catch(e => console.warn('Cloud sync error:', e));
+        }
+
         notifyAdmin('participant_disqualified', { name: participant.name, reg: participant.reg });
 
         document.body.innerHTML = `<div style="max-width:600px; width:92%; margin: 60px auto; background:#162447; padding:30px 20px; border-radius:12px; text-align:center; color:white; border:2px solid #e43f5a;">
@@ -911,6 +972,27 @@ int main() {
         let results = JSON.parse(localStorage.getItem('cs_completed_submissions') || '[]');
         results.push({ name: participant.name, reg: participant.reg, score: score, time: timeStr, rawTime: participant.timeSpent });
         localStorage.setItem('cs_completed_submissions', JSON.stringify(results));
+
+        // Multi-device Cloud Sync: update participant to completed and record submission
+        if(db && participant.reg) {
+            const key = getParticipantKey(participant.reg);
+            const subData = {
+                name: participant.name,
+                reg: participant.reg,
+                score: score,
+                time: timeStr,
+                rawTime: participant.timeSpent,
+                timestamp: Date.now()
+            };
+            db.ref('participants/' + key).update({
+                status: 'Completed',
+                score: score,
+                timeTaken: timeStr,
+                updatedAt: Date.now()
+            }).catch(e => console.warn('Cloud sync error:', e));
+
+            db.ref('submissions/' + key).set(subData).catch(e => console.warn('Cloud sync error:', e));
+        }
 
         notifyAdmin('participant_completed', { name: participant.name, reg: participant.reg, score, time: timeStr });
 

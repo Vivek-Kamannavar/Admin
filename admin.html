@@ -8,6 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+    <!-- Firebase Realtime Cloud Synchronization SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
     <style>
         :root {
             --bg-base: #090d16;
@@ -498,9 +501,9 @@
     <div class="header-box">
         <div class="header-badge-row">
             <h2>Admin Monitoring Dashboard</h2>
-            <div class="live-pill">
-                <span class="live-pulse"></span>
-                <span>LIVE SYNC ACTIVE</span>
+            <div class="live-pill" id="cloud-status-pill">
+                <span class="live-pulse" id="cloud-status-dot"></span>
+                <span id="cloud-status-text">CONNECTING TO CLOUD...</span>
             </div>
         </div>
         <p class="subtitle">Live monitoring panel for event conductors. Track real-time participant activity, tab-switch violations, completion status, and calculate final top 3 winners based on highest score and minimum time consumed.</p>
@@ -576,7 +579,26 @@
 </div>
 
 <script>
-    // Real-time synchronization channel
+    // Firebase Realtime Database Configuration for multi-device cross-network live sync
+    const firebaseConfig = {
+        apiKey: "AIzaSyDayI8xRvcribG0EUiBWnr2tLSlVTPGXZo",
+        authDomain: "admin-ebe4c.firebaseapp.com",
+        databaseURL: "https://admin-ebe4c-default-rtdb.firebaseio.com",
+        projectId: "admin-ebe4c",
+        storageBucket: "admin-ebe4c.firebasestorage.app",
+        messagingSenderId: "272029700916",
+        appId: "1:272029700916:web:011553f1310e38a7698b61"
+    };
+
+    if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    const db = (typeof firebase !== 'undefined' && firebase.database) ? firebase.database() : null;
+
+    let currentLiveList = [];
+    let currentSubmissions = [];
+
+    // Local BroadcastChannel for same-device cross-tab communication
     const syncChannel = ('BroadcastChannel' in window) ? new BroadcastChannel('cs_quest_sync') : null;
     if(syncChannel) {
         syncChannel.onmessage = (e) => {
@@ -587,14 +609,53 @@
         };
     }
 
-    // Also listen to storage events across all browser tabs
+    // Local storage event listener for same-device tabs
     window.addEventListener('storage', () => {
         refreshData();
     });
 
-    function refreshData() {
-        let liveList = JSON.parse(localStorage.getItem('cs_live_participants') || '[]');
+    // Cloud Real-Time Listeners (Multi-Device Cross-Network Sync)
+    if(db) {
+        // Monitor connection status
+        db.ref('.info/connected').on('value', (snap) => {
+            const isConnected = snap.val() === true;
+            const dot = document.getElementById('cloud-status-dot');
+            const text = document.getElementById('cloud-status-text');
+            if(dot && text) {
+                if(isConnected) {
+                    text.innerText = 'CLOUD LIVE SYNC ACTIVE';
+                    dot.style.background = '#10b981';
+                    dot.style.boxShadow = '0 0 10px #10b981';
+                } else {
+                    text.innerText = 'CONNECTING TO CLOUD...';
+                    dot.style.background = '#f59e0b';
+                    dot.style.boxShadow = '0 0 10px #f59e0b';
+                }
+            }
+        });
+
+        // Live participants sync across all devices
+        db.ref('participants').on('value', (snapshot) => {
+            const data = snapshot.val() || {};
+            currentLiveList = Object.values(data);
+            localStorage.setItem('cs_live_participants', JSON.stringify(currentLiveList));
+            renderParticipants(currentLiveList);
+        });
+
+        // Completed submissions sync across all devices
+        db.ref('submissions').on('value', (snapshot) => {
+            const data = snapshot.val() || {};
+            currentSubmissions = Object.values(data);
+            localStorage.setItem('cs_completed_submissions', JSON.stringify(currentSubmissions));
+            if(currentSubmissions.length > 0) {
+                renderWinners(currentSubmissions);
+            }
+        });
+    }
+
+    function renderParticipants(liveList) {
         let tbody = document.getElementById('participant-table-body');
+        if(!tbody) return;
         tbody.innerHTML = '';
 
         let total = liveList.length;
@@ -612,7 +673,7 @@
 
         liveList.forEach(p => {
             let badgeClass = 'badge-active';
-            let displayStatus = p.status;
+            let displayStatus = p.status || 'Active';
 
             if(displayStatus === 'Completed') {
                 badgeClass = 'badge-comp';
@@ -624,34 +685,34 @@
 
             let tr = document.createElement('tr');
             tr.innerHTML = `
-                <td class="participant-name-cell">${p.name}</td>
-                <td class="reg-cell">${p.reg}</td>
+                <td class="participant-name-cell">${p.name || 'Anonymous'}</td>
+                <td class="reg-cell">${p.reg || '-'}</td>
                 <td><span class="badge ${badgeClass}">${displayStatus}</span></td>
-                <td><strong style="color: #38bdf8;">${p.score}</strong> / 27</td>
-                <td style="font-family: 'JetBrains Mono', monospace; font-size: 13px;">${p.timeTaken}</td>
+                <td><strong style="color: #38bdf8;">${p.score !== undefined ? p.score : 0}</strong> / 27</td>
+                <td style="font-family: 'JetBrains Mono', monospace; font-size: 13px;">${p.timeTaken || '00:00'}</td>
             `;
             tbody.appendChild(tr);
         });
     }
 
-    function calculateWinners() {
-        let submissions = JSON.parse(localStorage.getItem('cs_completed_submissions') || '[]');
+    function renderWinners(submissions) {
         let listElem = document.getElementById('podium-list');
+        if(!listElem) return;
         listElem.innerHTML = '';
 
-        if(submissions.length === 0) {
+        if(!submissions || submissions.length === 0) {
             listElem.innerHTML = `<p style="color: #fca5a5; font-size: 13.5px; padding: 6px 0;">No completed submissions found yet to calculate winners.</p>`;
             return;
         }
 
-        submissions.sort((a, b) => {
+        let sorted = [...submissions].sort((a, b) => {
             if(b.score !== a.score) {
-                return b.score - a.score;
+                return (b.score || 0) - (a.score || 0);
             }
-            return a.rawTime - b.rawTime;
+            return (a.rawTime || 0) - (b.rawTime || 0);
         });
 
-        let top3 = submissions.slice(0, 3);
+        let top3 = sorted.slice(0, 3);
         const medals = ['🥇 1st Place', '🥈 2nd Place', '🥉 3rd Place'];
         const rankClasses = ['first', 'second', 'third'];
 
@@ -674,21 +735,69 @@
         });
     }
 
-    // Auto load and poll every 2 seconds
-    window.onload = refreshData;
-    setInterval(refreshData, 2000);
+    function refreshData() {
+        if(db) {
+            db.ref('participants').once('value').then(snap => {
+                const data = snap.val() || {};
+                currentLiveList = Object.values(data);
+                renderParticipants(currentLiveList);
+            }).catch(() => {
+                let local = JSON.parse(localStorage.getItem('cs_live_participants') || '[]');
+                renderParticipants(local);
+            });
+            db.ref('submissions').once('value').then(snap => {
+                const data = snap.val() || {};
+                currentSubmissions = Object.values(data);
+                if(currentSubmissions.length > 0) {
+                    renderWinners(currentSubmissions);
+                }
+            }).catch(() => {
+                let local = JSON.parse(localStorage.getItem('cs_completed_submissions') || '[]');
+                if(local.length > 0) renderWinners(local);
+            });
+        } else {
+            let local = JSON.parse(localStorage.getItem('cs_live_participants') || '[]');
+            renderParticipants(local);
+            let localSubs = JSON.parse(localStorage.getItem('cs_completed_submissions') || '[]');
+            if(localSubs.length > 0) renderWinners(localSubs);
+        }
+    }
+
+    function calculateWinners() {
+        if(currentSubmissions.length > 0) {
+            renderWinners(currentSubmissions);
+        } else {
+            let local = JSON.parse(localStorage.getItem('cs_completed_submissions') || '[]');
+            renderWinners(local);
+        }
+    }
 
     function clearAllData() {
-        if(confirm('Are you sure you want to reset all participant and leaderboard data?')) {
+        if(confirm('Are you sure you want to reset all participant and leaderboard data across all devices?')) {
+            if(db) {
+                db.ref('participants').remove();
+                db.ref('submissions').remove();
+            }
             localStorage.removeItem('cs_live_participants');
             localStorage.removeItem('cs_completed_submissions');
-            refreshData();
-            document.getElementById('podium-list').innerHTML = `<p style="color: #94a3b8; font-style: italic; font-size: 13.5px; padding: 4px 0;">Data reset. Ready for new event session.</p>`;
+            currentLiveList = [];
+            currentSubmissions = [];
+            renderParticipants([]);
+            document.getElementById('podium-list').innerHTML = `<p style="color: #94a3b8; font-style: italic; font-size: 13.5px; padding: 4px 0;">Data reset across all devices. Ready for new event session.</p>`;
             if(syncChannel) {
                 syncChannel.postMessage({ action: 'data_reset', timestamp: Date.now() });
             }
         }
     }
+
+    // Initial load from cache while cloud connects
+    window.onload = () => {
+        let local = JSON.parse(localStorage.getItem('cs_live_participants') || '[]');
+        if(local.length > 0) renderParticipants(local);
+        let localSubs = JSON.parse(localStorage.getItem('cs_completed_submissions') || '[]');
+        if(localSubs.length > 0) renderWinners(localSubs);
+        refreshData();
+    };
 </script>
 </body>
 </html>
