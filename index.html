@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS Quest Admin Dashboard & Conductor Panel</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e1b4b, #0f172a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #f0f0f0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .container { max-width: 1000px; margin: 0 auto; background: rgba(30, 27, 75, 0.85); backdrop-filter: blur(10px); border-radius: 16px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); }
+        h1, h2, h3 { color: #a5dff9; margin-bottom: 15px; }
+        p { color: #cbd5e1; margin-bottom: 15px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: rgba(15, 23, 42, 0.7); border: 1px solid #334155; border-radius: 12px; padding: 20px; text-align: center; }
+        .stat-card h3 { font-size: 28px; color: #38bdf8; margin-bottom: 5px; }
+        .stat-card span { font-size: 14px; color: #94a3b8; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: rgba(15, 23, 42, 0.6); border-radius: 8px; overflow: hidden; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #334155; font-size: 14px; }
+        th { background: #1e293b; color: #38bdf8; }
+        tr:hover { background: rgba(51, 65, 85, 0.4); }
+        .badge { padding: 5px 10px; border-radius: 6px; font-size: 12px; font-weight: bold; display: inline-block; }
+        .badge-active { background: #065f46; color: #34d399; }
+        .badge-comp { background: #1e40af; color: #93c5fd; }
+        .badge-disq { background: #991b1b; color: #fca5a5; }
+        .btn { background: #0284c7; color: white; border: none; padding: 10px 20px; font-size: 14px; border-radius: 6px; cursor: pointer; transition: 0.3s; font-weight: bold; margin-right: 10px; }
+        .btn:hover { background: #0369a1; }
+        .btn-danger { background: #dc2626; }
+        .btn-danger:hover { background: #b91c1c; }
+        .podium-box { background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid #38bdf8; border-radius: 12px; padding: 20px; margin-top: 30px; }
+        .podium-list { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .podium-item { display: flex; justify-content: space-between; align-items: center; background: rgba(56, 189, 248, 0.1); padding: 12px 18px; border-radius: 8px; border-left: 5px solid #38bdf8; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Admin Monitoring Dashboard</h2>
+    <p>Live monitoring panel for event conductors. Track real-time participant activity, tab-switch violations, completion status, and calculate final top 3 winners based on highest score and minimum time consumed.</p>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3 id="stat-total">0</h3>
+            <span>Total Participants</span>
+        </div>
+        <div class="stat-card">
+            <h3 id="stat-active">0</h3>
+            <span>Active Sessions</span>
+        </div>
+        <div class="stat-card">
+            <h3 id="stat-disq">0</h3>
+            <span>Disqualified / Violations</span>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+        <button class="btn" onclick="refreshData()">Refresh Live Data</button>
+        <button class="btn btn-danger" onclick="clearAllData()">Reset Event Data</button>
+    </div>
+
+    <h3>Live Participant Activity Stream</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Participant Name</th>
+                <th>Register Number</th>
+                <th>Status</th>
+                <th>Score</th>
+                <th>Time Consumed</th>
+            </tr>
+        </thead>
+        <tbody id="participant-table-body">
+            <!-- Dynamically populated -->
+        </tbody>
+    </table>
+
+    <div class="podium-box">
+        <h3>Final Winners Podium (Top 3 Participants)</h3>
+        <p>Sorted automatically by <strong>Highest Score</strong> and <strong>Minimum Time Consumed</strong>.</p>
+        <button class="btn" style="background:#10b981;" onclick="calculateWinners()">Calculate Winners</button>
+        <div class="podium-list" id="podium-list">
+            <p style="color: #94a3b8; font-style: italic;">Click 'Calculate Winners' after participants complete the activity.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function refreshData() {
+        let liveList = JSON.parse(localStorage.getItem('cs_live_participants') || '[]');
+        let tbody = document.getElementById('participant-table-body');
+        tbody.innerHTML = '';
+
+        let total = liveList.length;
+        let active = liveList.filter(x => x.status === 'Active').length;
+        let disq = liveList.filter(x => x.status === 'Disqualified').length;
+
+        document.getElementById('stat-total').innerText = total;
+        document.getElementById('stat-active').innerText = active;
+        document.getElementById('stat-disq').innerText = disq;
+
+        if(liveList.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #94a3b8;">No participants registered yet.</td></tr>`;
+            return;
+        }
+
+        liveList.forEach(p => {
+            let badgeClass = 'badge-active';
+            let displayStatus = p.status;
+
+            // Ensure completed status remains permanently locked against any tab close/focus syncs
+            if(displayStatus === 'Completed') {
+                badgeClass = 'badge-comp';
+                displayStatus = 'Completed';
+            } else if(displayStatus === 'Disqualified') {
+                badgeClass = 'badge-disq';
+                displayStatus = 'Disqualified (Tab Switch / Focus Lost)';
+            }
+
+            let tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${p.name}</td>
+                <td>${p.reg}</td>
+                <td><span class="badge ${badgeClass}">${displayStatus}</span></td>
+                <td>${p.score} / 27</td>
+                <td>${p.timeTaken}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function calculateWinners() {
+        let submissions = JSON.parse(localStorage.getItem('cs_completed_submissions') || '[]');
+        let listElem = document.getElementById('podium-list');
+        listElem.innerHTML = '';
+
+        if(submissions.length === 0) {
+            listElem.innerHTML = `<p style="color: #fca5a5;">No completed submissions found yet to calculate winners.</p>`;
+            return;
+        }
+
+        // Sort strictly by: 1. Highest Score descending, 2. Minimum Time Consumed ascending
+        submissions.sort((a, b) => {
+            if(b.score !== a.score) {
+                return b.score - a.score;
+            }
+            return a.rawTime - b.rawTime;
+        });
+
+        let top3 = submissions.slice(0, 3);
+        const medals = ['🥇 1st Place', '🥈 2nd Place', '🥉 3rd Place'];
+
+        top3.forEach((winner, index) => {
+            let item = document.createElement('div');
+            item.className = 'podium-item';
+            item.innerHTML = `
+                <div>
+                    <strong>${medals[index]}: ${winner.name}</strong> (${winner.reg})
+                </div>
+                <div>
+                    Score: <span style="color:#38bdf8; font-weight:bold;">${winner.score} / 27</span> | Time Consumed: ${winner.time}
+                </div>
+            `;
+            listElem.appendChild(item);
+        });
+    }
+
+    // Auto load and poll every 3 seconds
+    window.onload = refreshData;
+    setInterval(refreshData, 3000);
+
+    function clearAllData() {
+        if(confirm('Are you sure you want to reset all participant and leaderboard data?')) {
+            localStorage.removeItem('cs_live_participants');
+            localStorage.removeItem('cs_completed_submissions');
+            refreshData();
+            document.getElementById('podium-list').innerHTML = `<p style="color: #94a3b8; font-style: italic;">Data reset. Ready for new event session.</p>`;
+        }
+    }
+</script>
+</body>
+</html>
