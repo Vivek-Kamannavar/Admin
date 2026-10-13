@@ -326,6 +326,206 @@
             .container { padding: 14px 8px; }
             p { font-size: 14px; }
         }
+
+        /* Quiz Stepper & Multi-Page Pagination */
+        .quiz-nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: rgba(15, 23, 42, 0.75);
+            padding: 12px 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+        }
+        .quiz-page-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .page-tab-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 16px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            font-size: 13.5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            touch-action: manipulation;
+        }
+        .page-tab-btn:hover {
+            background: rgba(56, 189, 248, 0.1);
+            color: #f1f5f9;
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+        .page-tab-btn.active {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(14, 165, 233, 0.3));
+            color: #38bdf8;
+            border-color: #38bdf8;
+            box-shadow: 0 0 14px rgba(56, 189, 248, 0.25);
+            font-weight: 700;
+        }
+        .tab-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            font-size: 11.5px;
+            font-weight: 700;
+        }
+        .page-tab-btn.active .tab-num {
+            background: #38bdf8;
+            color: #0f172a;
+        }
+        .answered-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 14px;
+            border-radius: 20px;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #34d399;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+        .counter-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 8px #10b981;
+            animation: pulseDot 2s infinite ease-in-out;
+        }
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        /* Module Header Badge & Question Styling */
+        .module-header-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            padding: 4px 10px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+        .q-row {
+            margin-top: 18px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .q-row:first-of-type {
+            margin-top: 10px;
+            padding-top: 0;
+            border-top: none;
+        }
+        .q-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(2, 132, 199, 0.2));
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            color: #38bdf8;
+            font-weight: 800;
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            margin-right: 6px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .page-banner {
+            background: linear-gradient(90deg, rgba(56, 189, 248, 0.12), rgba(30, 41, 59, 0.5));
+            border-left: 4px solid #38bdf8;
+            border-radius: 0 10px 10px 0;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .page-banner-title {
+            font-size: 14.5px;
+            font-weight: 700;
+            color: #f1f5f9;
+        }
+        .page-banner-desc {
+            font-size: 12.5px;
+            color: #94a3b8;
+        }
+
+        /* Page Bottom Navigation */
+        .page-footer-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-prev {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #e2e8f0;
+        }
+        .btn-prev:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .btn-next {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: white;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+        }
+        .btn-next:hover {
+            background: linear-gradient(135deg, #0369a1, #075985);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(2, 132, 199, 0.45);
+        }
+        .btn-submit {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: 1px solid rgba(52, 211, 153, 0.4);
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+        }
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+        }
+        .page-status-pill {
+            font-size: 13px;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+        .page-status-pill strong {
+            color: #38bdf8;
+        }
     </style>
 </head>
 <body>
@@ -351,301 +551,365 @@
         <input type="text" id="p-reg" placeholder="Enter your college register number">
     </div>
     <button class="btn" onclick="startChallenge()">Start Activity Now</button>
-</div>
-
-<div class="container hidden" id="game-screen">
+<<div class="container hidden" id="game-screen">
     <div class="timer-bar">
         <div>Participant: <span id="disp-name" style="color:#a5dff9; font-weight:bold;"></span></div>
-        <div>Time Left: <span id="timer" style="color:#e43f5a; font-weight:bold;">30:00</span></div>
-    </div>
-
-    <!-- MODULE 1: Match the Following (DBMS Types - 5 Items) -->
-    <div class="module-card">
-        <h3>1. Match the Following: Types of Databases in DBMS</h3>
-        <p>Match each DBMS category with its correct architectural definition or example.</p>
-        <div class="match-row">
-            <span>1. Relational DBMS (RDBMS)</span>
-            <select id="m1">
-                <option value="">-- Select Match --</option>
-                <option value="A">Stores unstructured documents and JSON collections (e.g., MongoDB)</option>
-                <option value="B">Stores data in tables with rows and columns enforcing ACID properties (e.g., PostgreSQL)</option>
-                <option value="C">Optimized for high-speed graph traversals and relationship links (e.g., Neo4j)</option>
-                <option value="D">Stores key-value pairs in high-performance memory cache (e.g., Redis)</option>
-                <option value="E">Uses column-oriented storage tuned for fast analytical queries (e.g., Apache Cassandra)</option>
-            </select>
-        </div>
-        <div class="match-row">
-            <span>2. NoSQL Document Database</span>
-            <select id="m2">
-                <option value="">-- Select Match --</option>
-                <option value="A">Stores unstructured documents and JSON collections (e.g., MongoDB)</option>
-                <option value="B">Stores data in tables with rows and columns enforcing ACID properties (e.g., PostgreSQL)</option>
-                <option value="C">Optimized for high-speed graph traversals and relationship links (e.g., Neo4j)</option>
-                <option value="D">Stores key-value pairs in high-performance memory cache (e.g., Redis)</option>
-                <option value="E">Uses column-oriented storage tuned for fast analytical queries (e.g., Apache Cassandra)</option>
-            </select>
-        </div>
-        <div class="match-row">
-            <span>3. Graph Database</span>
-            <select id="m3">
-                <option value="">-- Select Match --</option>
-                <option value="A">Stores unstructured documents and JSON collections (e.g., MongoDB)</option>
-                <option value="B">Stores data in tables with rows and columns enforcing ACID properties (e.g., PostgreSQL)</option>
-                <option value="C">Optimized for high-speed graph traversals and relationship links (e.g., Neo4j)</option>
-                <option value="D">Stores key-value pairs in high-performance memory cache (e.g., Redis)</option>
-                <option value="E">Uses column-oriented storage tuned for fast analytical queries (e.g., Apache Cassandra)</option>
-            </select>
-        </div>
-        <div class="match-row">
-            <span>4. In-Memory Key-Value Store</span>
-            <select id="m4">
-                <option value="">-- Select Match --</option>
-                <option value="A">Stores unstructured documents and JSON collections (e.g., MongoDB)</option>
-                <option value="B">Stores data in tables with rows and columns enforcing ACID properties (e.g., PostgreSQL)</option>
-                <option value="C">Optimized for high-speed graph traversals and relationship links (e.g., Neo4j)</option>
-                <option value="D">Stores key-value pairs in high-performance memory cache (e.g., Redis)</option>
-                <option value="E">Uses column-oriented storage tuned for fast analytical queries (e.g., Apache Cassandra)</option>
-            </select>
-        </div>
-        <div class="match-row">
-            <span>5. Wide-Column Distributed Store</span>
-            <select id="m5">
-                <option value="">-- Select Match --</option>
-                <option value="A">Stores unstructured documents and JSON collections (e.g., MongoDB)</option>
-                <option value="B">Stores data in tables with rows and columns enforcing ACID properties (e.g., PostgreSQL)</option>
-                <option value="C">Optimized for high-speed graph traversals and relationship links (e.g., Neo4j)</option>
-                <option value="D">Stores key-value pairs in high-performance memory cache (e.g., Redis)</option>
-                <option value="E">Uses column-oriented storage tuned for fast analytical queries (e.g., Apache Cassandra)</option>
-            </select>
+        <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+            <div style="font-size:13px; color:#94a3b8;"><span id="active-page-indicator" style="color:#38bdf8; font-weight:700;">Page 1 of 2 (Q1–Q15)</span></div>
+            <div>Time Left: <span id="timer" style="color:#e43f5a; font-weight:bold;">30:00</span></div>
         </div>
     </div>
 
-    <!-- MODULE 2: C Error Detection (5 Questions) -->
-    <div class="module-card">
-        <h3>2. Error Detection in C Programming (Set of 5)</h3>
-        
-        <p><strong>Q1:</strong> What error exists in this snippet?</p>
-        <code>int main() {
+    <!-- Stepper Navigation Header -->
+    <div class="quiz-nav-header">
+        <div class="quiz-page-tabs">
+            <button type="button" class="page-tab-btn active" id="tab-btn-1" onclick="goToPage(1)">
+                <span class="tab-num">1</span>
+                <span class="tab-label">Page 1 (Q1 – Q15)</span>
+            </button>
+            <button type="button" class="page-tab-btn" id="tab-btn-2" onclick="goToPage(2)">
+                <span class="tab-num">2</span>
+                <span class="tab-label">Page 2 (Q16 – Q25 & Puzzle)</span>
+            </button>
+        </div>
+        <div class="answered-badge" id="answered-counter">
+            <span class="counter-dot"></span>
+            <span id="answered-text">0 / 26 Answered</span>
+        </div>
+    </div>
+
+    <!-- PAGE 1: QUESTIONS 1 TO 15 (MAX 15 QUESTIONS PER PAGE) -->
+    <div id="quiz-page-1">
+        <div class="page-banner">
+            <div>
+                <div class="page-banner-title">Page 1: Database Architecture, C Logic & Operating Systems</div>
+                <div class="page-banner-desc">Complete the 15 questions below. All choices are recorded automatically.</div>
+            </div>
+            <div class="page-status-pill">Page Progress: <strong id="page-1-status">0 / 15 answered</strong></div>
+        </div>
+
+        <!-- MODULE 1: Match the Following (DBMS Types - 5 Items: Q1 - Q5) -->
+        <div class="module-card">
+            <div class="module-header-badge">Module 1 &bull; Questions 1–5</div>
+            <h3>1. Match the Following: Types of Databases in DBMS</h3>
+            <p>Match each DBMS category with its correct architectural definition or example.</p>
+            <div class="match-row">
+                <span><span class="q-badge">Q1</span> 1. Relational DBMS (RDBMS)</span>
+                <select id="m1" onchange="handleMatchChange('m1', this.value)">
+                    <option value="">-- Select Match --</option>
+                    <option value="A">Stores unstructured documents and JSON collections (e.g., MongoDB)</option>
+                    <option value="B">Stores data in tables with rows and columns enforcing ACID properties (e.g., PostgreSQL)</option>
+                    <option value="C">Optimized for high-speed graph traversals and relationship links (e.g., Neo4j)</option>
+                    <option value="D">Stores key-value pairs in high-performance memory cache (e.g., Redis)</option>
+                    <option value="E">Uses column-oriented storage tuned for fast analytical queries (e.g., Apache Cassandra)</option>
+                </select>
+            </div>
+            <div class="match-row">
+                <span><span class="q-badge">Q2</span> 2. NoSQL Document Database</span>
+                <select id="m2" onchange="handleMatchChange('m2', this.value)">
+                    <option value="">-- Select Match --</option>
+                    <option value="A">Stores unstructured documents and JSON collections (e.g., MongoDB)</option>
+                    <option value="B">Stores data in tables with rows and columns enforcing ACID properties (e.g., PostgreSQL)</option>
+                    <option value="C">Optimized for high-speed graph traversals and relationship links (e.g., Neo4j)</option>
+                    <option value="D">Stores key-value pairs in high-performance memory cache (e.g., Redis)</option>
+                    <option value="E">Uses column-oriented storage tuned for fast analytical queries (e.g., Apache Cassandra)</option>
+                </select>
+            </div>
+            <div class="match-row">
+                <span><span class="q-badge">Q3</span> 3. Graph Database</span>
+                <select id="m3" onchange="handleMatchChange('m3', this.value)">
+                    <option value="">-- Select Match --</option>
+                    <option value="A">Stores unstructured documents and JSON collections (e.g., MongoDB)</option>
+                    <option value="B">Stores data in tables with rows and columns enforcing ACID properties (e.g., PostgreSQL)</option>
+                    <option value="C">Optimized for high-speed graph traversals and relationship links (e.g., Neo4j)</option>
+                    <option value="D">Stores key-value pairs in high-performance memory cache (e.g., Redis)</option>
+                    <option value="E">Uses column-oriented storage tuned for fast analytical queries (e.g., Apache Cassandra)</option>
+                </select>
+            </div>
+            <div class="match-row">
+                <span><span class="q-badge">Q4</span> 4. In-Memory Key-Value Store</span>
+                <select id="m4" onchange="handleMatchChange('m4', this.value)">
+                    <option value="">-- Select Match --</option>
+                    <option value="A">Stores unstructured documents and JSON collections (e.g., MongoDB)</option>
+                    <option value="B">Stores data in tables with rows and columns enforcing ACID properties (e.g., PostgreSQL)</option>
+                    <option value="C">Optimized for high-speed graph traversals and relationship links (e.g., Neo4j)</option>
+                    <option value="D">Stores key-value pairs in high-performance memory cache (e.g., Redis)</option>
+                    <option value="E">Uses column-oriented storage tuned for fast analytical queries (e.g., Apache Cassandra)</option>
+                </select>
+            </div>
+            <div class="match-row">
+                <span><span class="q-badge">Q5</span> 5. Wide-Column Distributed Store</span>
+                <select id="m5" onchange="handleMatchChange('m5', this.value)">
+                    <option value="">-- Select Match --</option>
+                    <option value="A">Stores unstructured documents and JSON collections (e.g., MongoDB)</option>
+                    <option value="B">Stores data in tables with rows and columns enforcing ACID properties (e.g., PostgreSQL)</option>
+                    <option value="C">Optimized for high-speed graph traversals and relationship links (e.g., Neo4j)</option>
+                    <option value="D">Stores key-value pairs in high-performance memory cache (e.g., Redis)</option>
+                    <option value="E">Uses column-oriented storage tuned for fast analytical queries (e.g., Apache Cassandra)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- MODULE 2: C Error Detection (5 Questions: Q6 - Q10) -->
+        <div class="module-card">
+            <div class="module-header-badge">Module 2 &bull; Questions 6–10</div>
+            <h3>2. Error Detection in C Programming (Set of 5)</h3>
+            
+            <p class="q-row"><span class="q-badge">Q6</span> <strong>What error exists in this snippet?</strong></p>
+            <code>int main() {
     int ptr = 10;
     printf("%d", *ptr);
     return 0;
 }</code>
-        <div class="options-grid" id="c1-opts">
-            <button class="option-btn" onclick="selectOption('c1', 'A', this)">A) Missing semicolon after return statement</button>
-            <button class="option-btn" onclick="selectOption('c1', 'B', this)">B) Dereferencing an integer variable 'ptr' which is not a pointer type</button>
-            <button class="option-btn" onclick="selectOption('c1', 'C', this)">C) Invalid format specifier %d used for floating point</button>
-            <button class="option-btn" onclick="selectOption('c1', 'D', this)">D) Undeclared standard library header file</button>
-        </div>
+            <div class="options-grid" id="c1-opts">
+                <button class="option-btn" onclick="selectOption('c1', 'A', this)">A) Missing semicolon after return statement</button>
+                <button class="option-btn" onclick="selectOption('c1', 'B', this)">B) Dereferencing an integer variable 'ptr' which is not a pointer type</button>
+                <button class="option-btn" onclick="selectOption('c1', 'C', this)">C) Invalid format specifier %d used for floating point</button>
+                <button class="option-btn" onclick="selectOption('c1', 'D', this)">D) Undeclared standard library header file</button>
+            </div>
 
-        <p style="margin-top: 15px;"><strong>Q2:</strong> What error exists in this array snippet?</p>
-        <code>int main() {
+            <p class="q-row"><span class="q-badge">Q7</span> <strong>What error exists in this array snippet?</strong></p>
+            <code>int main() {
     int arr[3] = {1, 2, 3};
     printf("%d", arr[5]);
     return 0;
 }</code>
-        <div class="options-grid" id="c2-opts">
-            <button class="option-btn" onclick="selectOption('c2', 'A', this)">A) Compile error due to array initialization size</button>
-            <button class="option-btn" onclick="selectOption('c2', 'B', this)">B) Undefined behavior / out-of-bounds array index access (arr[5])</button>
-            <button class="option-btn" onclick="selectOption('c2', 'C', this)">C) Pointer arithmetic mismatch in printf</button>
-            <button class="option-btn" onclick="selectOption('c2', 'D', this)">D) Missing main function return type</button>
-        </div>
+            <div class="options-grid" id="c2-opts">
+                <button class="option-btn" onclick="selectOption('c2', 'A', this)">A) Compile error due to array initialization size</button>
+                <button class="option-btn" onclick="selectOption('c2', 'B', this)">B) Undefined behavior / out-of-bounds array index access (arr[5])</button>
+                <button class="option-btn" onclick="selectOption('c2', 'C', this)">C) Pointer arithmetic mismatch in printf</button>
+                <button class="option-btn" onclick="selectOption('c2', 'D', this)">D) Missing main function return type</button>
+            </div>
 
-        <p style="margin-top: 15px;"><strong>Q3:</strong> What error exists in this function snippet?</p>
-        <code>int* create() {
+            <p class="q-row"><span class="q-badge">Q8</span> <strong>What error exists in this function snippet?</strong></p>
+            <code>int* create() {
     int x = 42;
     return &x;
 }</code>
-        <div class="options-grid" id="c3-opts">
-            <button class="option-btn" onclick="selectOption('c3', 'A', this)">A) Returning address of a local automatic stack variable whose scope expires</button>
-            <button class="option-btn" onclick="selectOption('c3', 'B', this)">C) Missing parameter declaration in parentheses</button>
-            <button class="option-btn" onclick="selectOption('c3', 'C', this)">C) Invalid function return type annotation</button>
-            <button class="option-btn" onclick="selectOption('c3', 'D', this)">D) Infinite recursion loop</button>
-        </div>
+            <div class="options-grid" id="c3-opts">
+                <button class="option-btn" onclick="selectOption('c3', 'A', this)">A) Returning address of a local automatic stack variable whose scope expires</button>
+                <button class="option-btn" onclick="selectOption('c3', 'B', this)">B) Missing parameter declaration in parentheses</button>
+                <button class="option-btn" onclick="selectOption('c3', 'C', this)">C) Invalid function return type annotation</button>
+                <button class="option-btn" onclick="selectOption('c3', 'D', this)">D) Infinite recursion loop</button>
+            </div>
 
-        <p style="margin-top: 15px;"><strong>Q4:</strong> What error exists in this string copy snippet?</p>
-        <code>#include &lt;string.h&gt;
+            <p class="q-row"><span class="q-badge">Q9</span> <strong>What error exists in this string copy snippet?</strong></p>
+            <code>#include &lt;string.h&gt;
 int main() {
     char *str;
     strcpy(str, "Hello");
     return 0;
 }</code>
-        <div class="options-grid" id="c4-opts">
-            <button class="option-btn" onclick="selectOption('c4', 'A', this)">A) Missing null terminator character</button>
-            <button class="option-btn" onclick="selectOption('c4', 'B', this)">B) Uninitialized pointer 'str' points to random memory, causing segmentation fault</button>
-            <button class="option-btn" onclick="selectOption('c4', 'C', this)">C) Incorrect string.h header inclusion</button>
-            <button class="option-btn" onclick="selectOption('c4', 'D', this)">D) strcpy is deprecated in all compilers</button>
-        </div>
+            <div class="options-grid" id="c4-opts">
+                <button class="option-btn" onclick="selectOption('c4', 'A', this)">A) Missing null terminator character</button>
+                <button class="option-btn" onclick="selectOption('c4', 'B', this)">B) Uninitialized pointer 'str' points to random memory, causing segmentation fault</button>
+                <button class="option-btn" onclick="selectOption('c4', 'C', this)">C) Incorrect string.h header inclusion</button>
+                <button class="option-btn" onclick="selectOption('c4', 'D', this)">D) strcpy is deprecated in all compilers</button>
+            </div>
 
-        <p style="margin-top: 15px;"><strong>Q5:</strong> What error exists in this macro definition?</p>
-        <code>#define SQUARE(x) x * x
+            <p class="q-row"><span class="q-badge">Q10</span> <strong>What error exists in this macro definition?</strong></p>
+            <code>#define SQUARE(x) x * x
 int main() {
     int res = SQUARE(1 + 2);
     return 0;
 }</code>
-        <div class="options-grid" id="c5-opts">
-            <button class="option-btn" onclick="selectOption('c5', 'A', this)">A) Macro expansion expands to 1 + 2 * 1 + 2 due to lack of parentheses around parameters</button>
-            <button class="option-btn" onclick="selectOption('c5', 'B', this)">B) Macros cannot accept arithmetic expressions</button>
-            <button class="option-btn" onclick="selectOption('c5', 'C', this)">C) Missing semicolon after macro definition</button>
-            <button class="option-btn" onclick="selectOption('c5', 'D', this)">D) Redefinition of standard library function</button>
-        </div>
-    </div>
-
-    <!-- MODULE 3: OS Guessing (5 Questions) -->
-    <div class="module-card">
-        <h3>3. Operating System Guessing by Clues (Set of 5)</h3>
-        
-        <p><strong>Clue 1:</strong> A Unix-like open-source operating system kernel created by Linus Torvalds in 1991, powering most cloud servers and supercomputers.</p>
-        <div class="options-grid" id="os1-opts">
-            <button class="option-btn" onclick="selectOption('os1', 'Linux', this)">Linux Kernel / Ubuntu</button>
-            <button class="option-btn" onclick="selectOption('os1', 'Windows', this)">Microsoft Windows</button>
-            <button class="option-btn" onclick="selectOption('os1', 'macOS', this)">Apple macOS</button>
-            <button class="option-btn" onclick="selectOption('os1', 'Android', this)">Google Android</button>
-        </div>
-
-        <p style="margin-top: 15px;"><strong>Clue 2:</strong> A proprietary graphical operating system developed by Microsoft, dominant in personal desktop computing worldwide.</p>
-        <div class="options-grid" id="os2-opts">
-            <button class="option-btn" onclick="selectOption('os2', 'Windows', this)">Microsoft Windows 11</button>
-            <button class="option-btn" onclick="selectOption('os2', 'Linux', this)">Linux Mint</button>
-            <button class="option-btn" onclick="selectOption('os2', 'macOS', this)">Apple macOS Sonoma</button>
-            <button class="option-btn" onclick="selectOption('os2', 'FreeBSD', this)">FreeBSD</button>
-        </div>
-
-        <p style="margin-top: 15px;"><strong>Clue 3:</strong> A Unix-based operating system designed by Apple Inc. exclusively for Macintosh hardware lines.</p>
-        <div class="options-grid" id="os3-opts">
-            <button class="option-btn" onclick="selectOption('os3', 'Windows', this)">Microsoft Windows</button>
-            <button class="option-btn" onclick="selectOption('os3', 'macOS', this)">Apple macOS</button>
-            <button class="option-btn" onclick="selectOption('os3', 'Ubuntu', this)">Ubuntu Linux</button>
-            <button class="option-btn" onclick="selectOption('os3', 'Solaris', this)">Oracle Solaris</button>
-        </div>
-
-        <p style="margin-top: 15px;"><strong>Clue 4:</strong> A mobile operating system based on a modified version of the Linux kernel, developed by Google primarily for touchscreen smartphones and tablets.</p>
-        <div class="options-grid" id="os4-opts">
-            <button class="option-btn" onclick="selectOption('os4', 'iOS', this)">Apple iOS</button>
-            <button class="option-btn" onclick="selectOption('os4', 'Android', this)">Google Android</button>
-            <button class="option-btn" onclick="selectOption('os4', 'WindowsMobile', this)">Windows Mobile</button>
-            <button class="option-btn" onclick="selectOption('os4', 'Symbian', this)">Symbian OS</button>
-        </div>
-
-        <p style="margin-top: 15px;"><strong>Clue 5:</strong> A secure, robust Unix operating system derived from the Berkeley Software Distribution (BSD), renowned for advanced networking and ZFS filesystem integration.</p>
-        <div class="options-grid" id="os5-opts">
-            <button class="option-btn" onclick="selectOption('os5', 'FreeBSD', this)">FreeBSD</button>
-            <button class="option-btn" onclick="selectOption('os5', 'WindowsServer', this)">Windows Server</button>
-            <button class="option-btn" onclick="selectOption('os5', 'Fedora', this)">Fedora Linux</button>
-            <button class="option-btn" onclick="selectOption('os5', 'ChromeOS', this)">ChromeOS</button>
-        </div>
-    </div>
-
-    <!-- MODULE 4: DBMS Full Forms & Terminology (5 Questions) -->
-    <div class="module-card">
-        <h3>4. DBMS Full Forms & Terminology (Set of 5)</h3>
-        
-        <p><strong>Q1:</strong> What does <strong>ACID</strong> stand for in transaction processing?</p>
-        <div class="options-grid" id="db1-opts">
-            <button class="option-btn" onclick="selectOption('db1', 'A', this)">A) Atomicity, Consistency, Isolation, Durability</button>
-            <button class="option-btn" onclick="selectOption('db1', 'B', this)">B) Association, Concurrency, Indexing, Distribution</button>
-            <button class="option-btn" onclick="selectOption('db1', 'C', this)">C) Allocation, Control, Integrity, Dependency</button>
-            <button class="option-btn" onclick="selectOption('db1', 'D', this)">D) Authentication, Cipher, Isolation, Data</button>
-        </div>
-
-        <p style="margin-top: 15px;"><strong>Q2:</strong> What does <strong>BCNF</strong> stand for in database normalization theory?</p>
-        <div class="options-grid" id="db2-opts">
-            <button class="option-btn" onclick="selectOption('db2', 'A', this)">A) Boyce-Codd Normal Form</button>
-            <button class="option-btn" onclick="selectOption('db2', 'B', this)">B) Binary Column Normal Form</button>
-            <button class="option-btn" onclick="selectOption('db2', 'C', this)">C) Basic Clustering Normal Framework</button>
-            <button class="option-btn" onclick="selectOption('db2', 'D', this)">D) Balanced Control Nested File</button>
-        </div>
-
-        <p style="margin-top: 15px;"><strong>Q3:</strong> What does <strong>DDL</strong> stand for in SQL command categories?</p>
-        <div class="options-grid" id="db3-opts">
-            <button class="option-btn" onclick="selectOption('db3', 'A', this)">A) Data Definition Language</button>
-            <button class="option-btn" onclick="selectOption('db3', 'B', this)">B) Dynamic Data Link</button>
-            <button class="option-btn" onclick="selectOption('db3', 'C', this)">C) Distributed Database Layer</button>
-            <button class="option-btn" onclick="selectOption('db3', 'D', this)">D) Data Dependency Logic</button>
-        </div>
-
-        <p style="margin-top: 15px;"><strong>Q4:</strong> What does <strong>MVCC</strong> stand for in modern concurrency control systems?</p>
-        <div class="options-grid" id="db4-opts">
-            <button class="option-btn" onclick="selectOption('db4', 'A', this)">A) Multi-Version Concurrency Control</button>
-            <button class="option-btn" onclick="selectOption('db4', 'B', this)">B) Main Value Cache Consistency</button>
-            <button class="option-btn" onclick="selectOption('db4', 'C', this)">C) Master Validation Column Cluster</button>
-            <button class="option-btn" onclick="selectOption('db4', 'D', this)">D) Multi-View Cross Compilation</button>
-        </div>
-
-        <p style="margin-top: 15px;"><strong>Q5:</strong> What does <strong>SQL</strong> stand for?</p>
-        <div class="options-grid" id="db5-opts">
-            <button class="option-btn" onclick="selectOption('db5', 'A', this)">A) Structured Query Language</button>
-            <button class="option-btn" onclick="selectOption('db5', 'B', this)">B) Simple Query Logic</button>
-            <button class="option-btn" onclick="selectOption('db5', 'C', this)">C) Sequential Quotient Language</button>
-            <button class="option-btn" onclick="selectOption('db5', 'D', this)">D) System Quality Link</button>
-        </div>
-    </div>
-
-    <!-- MODULE 5: OOPs & DS in C (5 Questions) -->
-    <div class="module-card">
-        <h3>5. OOPs & Data Structures Concepts in C Programming (Set of 5)</h3>
-        
-        <p><strong>Q1:</strong> How can you simulate object encapsulation and data hiding in standard C?</p>
-        <div class="options-grid" id="oop1-opts">
-            <button class="option-btn" onclick="selectOption('oop1', 'A', this)">A) By declaring all variables global</button>
-            <button class="option-btn" onclick="selectOption('oop1', 'B', this)">B) By using opaque pointer types in header files and binding function pointers inside struct definitions</button>
-            <button class="option-btn" onclick="selectOption('oop1', 'C', this)">C) C language does not support any data structures</button>
-            <button class="option-btn" onclick="selectOption('oop1', 'D', this)">D) Using goto statements</button>
-        </div>
-
-        <p style="margin-top: 15px;"><strong>Q2:</strong> How can polymorphism and virtual method tables (vtables) be simulated in C?</p>
-        <div class="options-grid" id="oop2-opts">
-            <button class="option-btn" onclick="selectOption('oop2', 'A', this)">A) By embedding function pointer tables (struct of function pointers) within base struct definitions</button>
-            <button class="option-btn" onclick="selectOption('oop2', 'B', this)">B) By overloading function names directly</button>
-            <button class="option-btn" onclick="selectOption('oop2', 'C', this)">C) Using preprocessor directives #pragma</button>
-            <button class="option-btn" onclick="selectOption('oop2', 'D', this)">D) Polymorphism is impossible in C</button>
-        </div>
-
-        <p style="margin-top: 15px;"><strong>Q3:</strong> Which data structure uses FIFO (First In, First Out) ordering for processing elements?</p>
-        <div class="options-grid" id="oop3-opts">
-            <button class="option-btn" onclick="selectOption('oop3', 'A', this)">A) Stack</button>
-            <button class="option-btn" onclick="selectOption('oop3', 'B', this)">B) Queue</button>
-            <button class="option-btn" onclick="selectOption('oop3', 'C', this)">C) Binary Tree</button>
-            <button class="option-btn" onclick="selectOption('oop3', 'D', this)">D) Min-Heap</button>
-        </div>
-
-        <p style="margin-top: 15px;"><strong>Q4:</strong> What is the average time complexity for searching a key in a well-balanced Hash Table?</p>
-        <div class="options-grid" id="oop4-opts">
-            <button class="option-btn" onclick="selectOption('oop4', 'A', this)">A) O(1)</button>
-            <button class="option-btn" onclick="selectOption('oop4', 'B', this)">B) O(log n)</button>
-            <button class="option-btn" onclick="selectOption('oop4', 'C', this)">C) O(n)</button>
-            <button class="option-btn" onclick="selectOption('oop4', 'D', this)">D) O(n log n)</button>
-        </div>
-
-        <p style="margin-top: 15px;"><strong>Q5:</strong> How do you dynamically allocate memory for an array of 10 integers in C?</p>
-        <div class="options-grid" id="oop5-opts">
-            <button class="option-btn" onclick="selectOption('oop5', 'A', this)">A) int *arr = (int*)malloc(10 * sizeof(int));</button>
-            <button class="option-btn" onclick="selectOption('oop5', 'B', this)">B) int arr = new int[10];</button>
-            <button class="option-btn" onclick="selectOption('oop5', 'C', this)">C) alloc(10, int);</button>
-            <button class="option-btn" onclick="selectOption('oop5', 'D', this)">D) int arr[10] = dynamic;</button>
-        </div>
-    </div>
-
-    <!-- MODULE 6: 5x5 Graphical OS Logo Slide Puzzle -->
-    <div class="module-card">
-        <h3>6. 5x5 OS Logo Graphical Slide Puzzle Challenge</h3>
-        <p>Select an OS logo and complete the 5x5 puzzle effortlessly (Only 2 tiles are swapped for quick completion!).</p>
-        <div class="puzzle-wrapper">
-            <div class="os-selector">
-                <button class="os-sel-btn active" id="btn-tux" onclick="setOSImage('tux')">Linux Tux</button>
-                <button class="os-sel-btn" id="btn-win" onclick="setOSImage('win')">Windows</button>
-                <button class="os-sel-btn" id="btn-mac" onclick="setOSImage('mac')">macOS</button>
-                <button class="os-sel-btn" id="btn-android" onclick="setOSImage('android')">Android</button>
+            <div class="options-grid" id="c5-opts">
+                <button class="option-btn" onclick="selectOption('c5', 'A', this)">A) Macro expansion expands to 1 + 2 * 1 + 2 due to lack of parentheses around parameters</button>
+                <button class="option-btn" onclick="selectOption('c5', 'B', this)">B) Macros cannot accept arithmetic expressions</button>
+                <button class="option-btn" onclick="selectOption('c5', 'C', this)">C) Missing semicolon after macro definition</button>
+                <button class="option-btn" onclick="selectOption('c5', 'D', this)">D) Redefinition of standard library function</button>
             </div>
-            <div class="puzzle-preview">
-                <span>Target Goal Preview:</span>
-                <div class="preview-thumb" id="preview-thumb" style="background-image: url('https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tux.svg/1280px-Tux.svg.png');"></div>
-            </div>
-            <div class="puzzle-board" id="puzzle-board"></div>
-            <button class="btn" style="padding: 8px 16px; font-size: 14px;" onclick="resetPuzzle()">Reset Puzzle</button>
         </div>
-    </div>
 
-    <button class="btn" style="width:100%; margin-top:20px; background:#10b981;" onclick="submitActivity()">Submit Activity & Finish</button>
+        <!-- MODULE 3: OS Guessing (5 Questions: Q11 - Q15) -->
+        <div class="module-card">
+            <div class="module-header-badge">Module 3 &bull; Questions 11–15</div>
+            <h3>3. Operating System Guessing by Clues (Set of 5)</h3>
+            
+            <p class="q-row"><span class="q-badge">Q11</span> <strong>Clue 1:</strong> A Unix-like open-source operating system kernel created by Linus Torvalds in 1991, powering most cloud servers and supercomputers.</p>
+            <div class="options-grid" id="os1-opts">
+                <button class="option-btn" onclick="selectOption('os1', 'Linux', this)">Linux Kernel / Ubuntu</button>
+                <button class="option-btn" onclick="selectOption('os1', 'Windows', this)">Microsoft Windows</button>
+                <button class="option-btn" onclick="selectOption('os1', 'macOS', this)">Apple macOS</button>
+                <button class="option-btn" onclick="selectOption('os1', 'Android', this)">Google Android</button>
+            </div>
+
+            <p class="q-row"><span class="q-badge">Q12</span> <strong>Clue 2:</strong> A proprietary graphical operating system developed by Microsoft, dominant in personal desktop computing worldwide.</p>
+            <div class="options-grid" id="os2-opts">
+                <button class="option-btn" onclick="selectOption('os2', 'Windows', this)">Microsoft Windows 11</button>
+                <button class="option-btn" onclick="selectOption('os2', 'Linux', this)">Linux Mint</button>
+                <button class="option-btn" onclick="selectOption('os2', 'macOS', this)">Apple macOS Sonoma</button>
+                <button class="option-btn" onclick="selectOption('os2', 'FreeBSD', this)">FreeBSD</button>
+            </div>
+
+            <p class="q-row"><span class="q-badge">Q13</span> <strong>Clue 3:</strong> A Unix-based operating system designed by Apple Inc. exclusively for Macintosh hardware lines.</p>
+            <div class="options-grid" id="os3-opts">
+                <button class="option-btn" onclick="selectOption('os3', 'Windows', this)">Microsoft Windows</button>
+                <button class="option-btn" onclick="selectOption('os3', 'macOS', this)">Apple macOS</button>
+                <button class="option-btn" onclick="selectOption('os3', 'Ubuntu', this)">Ubuntu Linux</button>
+                <button class="option-btn" onclick="selectOption('os3', 'Solaris', this)">Oracle Solaris</button>
+            </div>
+
+            <p class="q-row"><span class="q-badge">Q14</span> <strong>Clue 4:</strong> A mobile operating system based on a modified version of the Linux kernel, developed by Google primarily for touchscreen smartphones and tablets.</p>
+            <div class="options-grid" id="os4-opts">
+                <button class="option-btn" onclick="selectOption('os4', 'iOS', this)">Apple iOS</button>
+                <button class="option-btn" onclick="selectOption('os4', 'Android', this)">Google Android</button>
+                <button class="option-btn" onclick="selectOption('os4', 'WindowsMobile', this)">Windows Mobile</button>
+                <button class="option-btn" onclick="selectOption('os4', 'Symbian', this)">Symbian OS</button>
+            </div>
+
+            <p class="q-row"><span class="q-badge">Q15</span> <strong>Clue 5:</strong> A secure, robust Unix operating system derived from the Berkeley Software Distribution (BSD), renowned for advanced networking and ZFS filesystem integration.</p>
+            <div class="options-grid" id="os5-opts">
+                <button class="option-btn" onclick="selectOption('os5', 'FreeBSD', this)">FreeBSD</button>
+                <button class="option-btn" onclick="selectOption('os5', 'WindowsServer', this)">Windows Server</button>
+                <button class="option-btn" onclick="selectOption('os5', 'Fedora', this)">Fedora Linux</button>
+                <button class="option-btn" onclick="selectOption('os5', 'ChromeOS', this)">ChromeOS</button>
+            </div>
+        </div>
+
+        <!-- Page 1 Bottom Navigation -->
+        <div class="page-footer-nav">
+            <div class="page-status-pill">Page 1 of 2: <strong id="page-1-footer-status">0 / 15 answered</strong></div>
+            <button type="button" class="btn btn-next" onclick="goToPage(2)">
+                <span>Next: Page 2 (Q16 – Q25 & Challenge) &rarr;</span>
+            </button>
+        </div>
+    </div><!-- End quiz-page-1 -->
+
+    <!-- PAGE 2: QUESTIONS 16 TO 25 + 5x5 OS PUZZLE CHALLENGE -->
+    <div id="quiz-page-2" class="hidden">
+        <div class="page-banner">
+            <div>
+                <div class="page-banner-title">Page 2: Database Theory, OOPs & Hands-On Slide Puzzle</div>
+                <div class="page-banner-desc">Complete the remaining questions and bonus puzzle before final submission.</div>
+            </div>
+            <div class="page-status-pill">Page Progress: <strong id="page-2-status">0 / 10 questions answered</strong></div>
+        </div>
+
+        <!-- MODULE 4: DBMS Full Forms & Terminology (5 Questions: Q16 - Q20) -->
+        <div class="module-card">
+            <div class="module-header-badge">Module 4 &bull; Questions 16–20</div>
+            <h3>4. DBMS Full Forms & Terminology (Set of 5)</h3>
+            
+            <p class="q-row"><span class="q-badge">Q16</span> <strong>What does ACID stand for in transaction processing?</strong></p>
+            <div class="options-grid" id="db1-opts">
+                <button class="option-btn" onclick="selectOption('db1', 'A', this)">A) Atomicity, Consistency, Isolation, Durability</button>
+                <button class="option-btn" onclick="selectOption('db1', 'B', this)">B) Association, Concurrency, Indexing, Distribution</button>
+                <button class="option-btn" onclick="selectOption('db1', 'C', this)">C) Allocation, Control, Integrity, Dependency</button>
+                <button class="option-btn" onclick="selectOption('db1', 'D', this)">D) Authentication, Cipher, Isolation, Data</button>
+            </div>
+
+            <p class="q-row"><span class="q-badge">Q17</span> <strong>What does BCNF stand for in database normalization theory?</strong></p>
+            <div class="options-grid" id="db2-opts">
+                <button class="option-btn" onclick="selectOption('db2', 'A', this)">A) Boyce-Codd Normal Form</button>
+                <button class="option-btn" onclick="selectOption('db2', 'B', this)">B) Binary Column Normal Form</button>
+                <button class="option-btn" onclick="selectOption('db2', 'C', this)">C) Basic Clustering Normal Framework</button>
+                <button class="option-btn" onclick="selectOption('db2', 'D', this)">D) Balanced Control Nested File</button>
+            </div>
+
+            <p class="q-row"><span class="q-badge">Q18</span> <strong>What does DDL stand for in SQL command categories?</strong></p>
+            <div class="options-grid" id="db3-opts">
+                <button class="option-btn" onclick="selectOption('db3', 'A', this)">A) Data Definition Language</button>
+                <button class="option-btn" onclick="selectOption('db3', 'B', this)">B) Dynamic Data Link</button>
+                <button class="option-btn" onclick="selectOption('db3', 'C', this)">C) Distributed Database Layer</button>
+                <button class="option-btn" onclick="selectOption('db3', 'D', this)">D) Data Dependency Logic</button>
+            </div>
+
+            <p class="q-row"><span class="q-badge">Q19</span> <strong>What does MVCC stand for in modern concurrency control systems?</strong></p>
+            <div class="options-grid" id="db4-opts">
+                <button class="option-btn" onclick="selectOption('db4', 'A', this)">A) Multi-Version Concurrency Control</button>
+                <button class="option-btn" onclick="selectOption('db4', 'B', this)">B) Main Value Cache Consistency</button>
+                <button class="option-btn" onclick="selectOption('db4', 'C', this)">C) Master Validation Column Cluster</button>
+                <button class="option-btn" onclick="selectOption('db4', 'D', this)">D) Multi-View Cross Compilation</button>
+            </div>
+
+            <p class="q-row"><span class="q-badge">Q20</span> <strong>What does SQL stand for?</strong></p>
+            <div class="options-grid" id="db5-opts">
+                <button class="option-btn" onclick="selectOption('db5', 'A', this)">A) Structured Query Language</button>
+                <button class="option-btn" onclick="selectOption('db5', 'B', this)">B) Simple Query Logic</button>
+                <button class="option-btn" onclick="selectOption('db5', 'C', this)">C) Sequential Quotient Language</button>
+                <button class="option-btn" onclick="selectOption('db5', 'D', this)">D) System Quality Link</button>
+            </div>
+        </div>
+
+        <!-- MODULE 5: OOPs & DS in C (5 Questions: Q21 - Q25) -->
+        <div class="module-card">
+            <div class="module-header-badge">Module 5 &bull; Questions 21–25</div>
+            <h3>5. OOPs & Data Structures Concepts in C Programming (Set of 5)</h3>
+            
+            <p class="q-row"><span class="q-badge">Q21</span> <strong>How can you simulate object encapsulation and data hiding in standard C?</strong></p>
+            <div class="options-grid" id="oop1-opts">
+                <button class="option-btn" onclick="selectOption('oop1', 'A', this)">A) By declaring all variables global</button>
+                <button class="option-btn" onclick="selectOption('oop1', 'B', this)">B) By using opaque pointer types in header files and binding function pointers inside struct definitions</button>
+                <button class="option-btn" onclick="selectOption('oop1', 'C', this)">C) C language does not support any data structures</button>
+                <button class="option-btn" onclick="selectOption('oop1', 'D', this)">D) Using goto statements</button>
+            </div>
+
+            <p class="q-row"><span class="q-badge">Q22</span> <strong>How can polymorphism and virtual method tables (vtables) be simulated in C?</strong></p>
+            <div class="options-grid" id="oop2-opts">
+                <button class="option-btn" onclick="selectOption('oop2', 'A', this)">A) By embedding function pointer tables (struct of function pointers) within base struct definitions</button>
+                <button class="option-btn" onclick="selectOption('oop2', 'B', this)">B) By overloading function names directly</button>
+                <button class="option-btn" onclick="selectOption('oop2', 'C', this)">C) Using preprocessor directives #pragma</button>
+                <button class="option-btn" onclick="selectOption('oop2', 'D', this)">D) Polymorphism is impossible in C</button>
+            </div>
+
+            <p class="q-row"><span class="q-badge">Q23</span> <strong>Which data structure uses FIFO (First In, First Out) ordering for processing elements?</strong></p>
+            <div class="options-grid" id="oop3-opts">
+                <button class="option-btn" onclick="selectOption('oop3', 'A', this)">A) Stack</button>
+                <button class="option-btn" onclick="selectOption('oop3', 'B', this)">B) Queue</button>
+                <button class="option-btn" onclick="selectOption('oop3', 'C', this)">C) Binary Tree</button>
+                <button class="option-btn" onclick="selectOption('oop3', 'D', this)">D) Min-Heap</button>
+            </div>
+
+            <p class="q-row"><span class="q-badge">Q24</span> <strong>What is the average time complexity for searching a key in a well-balanced Hash Table?</strong></p>
+            <div class="options-grid" id="oop4-opts">
+                <button class="option-btn" onclick="selectOption('oop4', 'A', this)">A) O(1)</button>
+                <button class="option-btn" onclick="selectOption('oop4', 'B', this)">B) O(log n)</button>
+                <button class="option-btn" onclick="selectOption('oop4', 'C', this)">C) O(n)</button>
+                <button class="option-btn" onclick="selectOption('oop4', 'D', this)">D) O(n log n)</button>
+            </div>
+
+            <p class="q-row"><span class="q-badge">Q25</span> <strong>How do you dynamically allocate memory for an array of 10 integers in C?</strong></p>
+            <div class="options-grid" id="oop5-opts">
+                <button class="option-btn" onclick="selectOption('oop5', 'A', this)">A) int *arr = (int*)malloc(10 * sizeof(int));</button>
+                <button class="option-btn" onclick="selectOption('oop5', 'B', this)">B) int arr = new int[10];</button>
+                <button class="option-btn" onclick="selectOption('oop5', 'C', this)">C) alloc(10, int);</button>
+                <button class="option-btn" onclick="selectOption('oop5', 'D', this)">D) int arr[10] = dynamic;</button>
+            </div>
+        </div>
+
+        <!-- MODULE 6: 5x5 Graphical OS Logo Slide Puzzle (Bonus Challenge) -->
+        <div class="module-card">
+            <div class="module-header-badge" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: rgba(245, 158, 11, 0.3);">Bonus Hands-On Challenge &bull; 2 Points</div>
+            <h3>6. 5x5 OS Logo Graphical Slide Puzzle Challenge</h3>
+            <p>Select an OS logo and complete the 5x5 puzzle (Only 2 adjacent tiles are swapped for quick completion!).</p>
+            <div class="puzzle-wrapper">
+                <div class="os-selector">
+                    <button class="os-sel-btn active" id="btn-tux" onclick="setOSImage('tux')">Linux Tux</button>
+                    <button class="os-sel-btn" id="btn-win" onclick="setOSImage('win')">Windows</button>
+                    <button class="os-sel-btn" id="btn-mac" onclick="setOSImage('mac')">macOS</button>
+                    <button class="os-sel-btn" id="btn-android" onclick="setOSImage('android')">Android</button>
+                </div>
+                <div class="puzzle-preview">
+                    <span>Target Goal Preview:</span>
+                    <div class="preview-thumb" id="preview-thumb" style="background-image: url('https://thumb.wikimedia.org/wikipedia/commons/thumb/3/35/Tux.svg/1280px-Tux.svg.png');"></div>
+                </div>
+                <div class="puzzle-board" id="puzzle-board"></div>
+                <button class="btn" style="padding: 8px 16px; font-size: 14px;" onclick="resetPuzzle()">Reset Puzzle</button>
+            </div>
+        </div>
+
+        <!-- Page 2 Bottom Navigation -->
+        <div class="page-footer-nav">
+            <button type="button" class="btn btn-prev" onclick="goToPage(1)">
+                <span>&larr; Back to Page 1 (Q1 – Q15)</span>
+            </button>
+            <button type="button" class="btn btn-submit" onclick="submitActivity()">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                <span>Submit Activity & Finish</span>
+            </button>
+        </div>
+    </div><!-- End quiz-page-2 -->
 </div>
 
 <div class="container hidden" id="gratitude-screen">
@@ -717,6 +981,85 @@ int main() {
     let currentOS = 'tux';
     
     let puzzleState = [];
+    let currentPage = 1;
+
+    function goToPage(pageNum) {
+        currentPage = pageNum;
+        const page1 = document.getElementById('quiz-page-1');
+        const page2 = document.getElementById('quiz-page-2');
+        const tab1 = document.getElementById('tab-btn-1');
+        const tab2 = document.getElementById('tab-btn-2');
+        const activePageIndicator = document.getElementById('active-page-indicator');
+
+        if(pageNum === 1) {
+            if(page1) page1.classList.remove('hidden');
+            if(page2) page2.classList.add('hidden');
+            if(tab1) tab1.classList.add('active');
+            if(tab2) tab2.classList.remove('active');
+            if(activePageIndicator) activePageIndicator.innerText = 'Page 1 of 2 (Q1–Q15)';
+        } else {
+            if(page1) page1.classList.add('hidden');
+            if(page2) page2.classList.remove('hidden');
+            if(tab1) tab1.classList.remove('active');
+            if(tab2) tab2.classList.add('active');
+            if(activePageIndicator) activePageIndicator.innerText = 'Page 2 of 2 (Q16–Q25)';
+            if(puzzleState && puzzleState.length === 25) {
+                renderPuzzle();
+            }
+        }
+        updateAnsweredCount();
+        const gameScreen = document.getElementById('game-screen');
+        if(gameScreen) {
+            gameScreen.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    function handleMatchChange(category, val) {
+        answers[category] = val;
+        updateAnsweredCount();
+    }
+
+    function getAnsweredCount() {
+        let count = 0;
+        ['m1','m2','m3','m4','m5',
+         'c1','c2','c3','c4','c5',
+         'os1','os2','os3','os4','os5',
+         'db1','db2','db3','db4','db5',
+         'oop1','oop2','oop3','oop4','oop5'].forEach(k => {
+            if(answers[k] && answers[k] !== '') count++;
+        });
+        let solvedArr = [];
+        for(let i=0; i<24; i++) solvedArr.push(i);
+        solvedArr.push('');
+        if(puzzleState && JSON.stringify(puzzleState) === JSON.stringify(solvedArr)) {
+            count++;
+        }
+        return count;
+    }
+
+    function updateAnsweredCount() {
+        const total = 26; // 25 questions + 1 puzzle
+        const count = getAnsweredCount();
+        const badge = document.getElementById('answered-text');
+        if(badge) badge.innerText = `${count} / ${total} Answered`;
+
+        let p1Count = 0;
+        ['m1','m2','m3','m4','m5','c1','c2','c3','c4','c5','os1','os2','os3','os4','os5'].forEach(k => {
+            if(answers[k] && answers[k] !== '') p1Count++;
+        });
+        let p1Elem = document.getElementById('page-1-status');
+        if(p1Elem) p1Elem.innerText = `${p1Count} / 15 answered`;
+        let p1FooterElem = document.getElementById('page-1-footer-status');
+        if(p1FooterElem) p1FooterElem.innerText = `${p1Count} / 15 answered`;
+
+        let p2Count = 0;
+        ['db1','db2','db3','db4','db5','oop1','oop2','oop3','oop4','oop5'].forEach(k => {
+            if(answers[k] && answers[k] !== '') p2Count++;
+        });
+        let p2Elem = document.getElementById('page-2-status');
+        if(p2Elem) p2Elem.innerText = `${p2Count} / 10 questions answered`;
+    }
+
     function initDefaultPuzzleState() {
         puzzleState = [];
         for(let i=0; i<24; i++) puzzleState.push(i);
@@ -774,6 +1117,8 @@ int main() {
         initDefaultPuzzleState();
         initPuzzle();
         initTabGuardian();
+        goToPage(1);
+        updateAnsweredCount();
     }
 
     function startTimer() {
@@ -853,6 +1198,7 @@ int main() {
         let parent = btnElem.parentElement;
         Array.from(parent.children).forEach(b => b.classList.remove('selected'));
         btnElem.classList.add('selected');
+        updateAnsweredCount();
     }
 
     function setOSImage(osKey) {
@@ -904,11 +1250,17 @@ int main() {
             puzzleState[emptyIdx] = puzzleState[idx];
             puzzleState[idx] = '';
             renderPuzzle();
+            updateAnsweredCount();
         }
     }
 
     function submitActivity() {
         if(isSubmitted) return;
+        const answeredCount = getAnsweredCount();
+        if(answeredCount < 26) {
+            const confirmed = confirm(`You have answered ${answeredCount} of 26 total items.\n\nAre you sure you want to finish and submit your activity?`);
+            if(!confirmed) return;
+        }
         isSubmitted = true; // Lock session permanently against late tab-switch triggers
         alert("Your answers are submitted!");
         clearInterval(timerInterval);
